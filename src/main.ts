@@ -1,12 +1,14 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { createApplication } from '@angular/platform-browser';
+import { createCustomElement } from '@angular/elements';
+import { InputComponent } from './app/ui/input/input.component';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+(async () => {
+  const app = await createApplication({
+    providers: [],
+  });
 
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+  const inputElement = createCustomElement(InputComponent, {
+    injector: app.injector,
+  });
+  customElements.define('wc-input', inputElement);
+})();
